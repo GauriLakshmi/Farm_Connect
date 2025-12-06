@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <h3 class="mb-4">Register for FarmConnect</h3>
+      <div class="card shadow">
+        <div class="card-body">
+          <form method="post">
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input name="name" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Contact Number</label>
+              <input name="contact_number" type="tel" class="form-control" required pattern="[0-9]{10,}" title="Contact number must be at least 10 digits"/>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Username</label>
+              <input name="username" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input name="password" type="password" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <select name="role" class="form-select" required>
+                <option value="customer">Customer</option>
+                <option value="farmer">Farmer</option>
+                </select>
+            </div>
+            <button class="btn btn-primary w-100 mt-2">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

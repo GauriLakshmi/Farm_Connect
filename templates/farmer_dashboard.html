@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Farmer Dashboard{% endblock %}
+{% block content %}
+  
+  <div id="newOrderAlert" class="alert alert-success alert-dismissible fade show fixed-top w-25 mx-auto mt-3 shadow-lg" role="alert" style="display:none; z-index: 1050;">
+    <strong>🎉 New Order!</strong> You have <span id="newOrderCount">0</span> new order(s) waiting!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  
+  <h3 class="display-6 mb-4">Farmer Dashboard: {{ current_user.name }}</h3>
+  
+  <div class="card shadow-sm mb-5">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h5>Your Product Inventory</h5>
+      <a class="btn btn-warning btn-sm" href="{{ url_for('add_product') }}">
+          <i class="fas fa-plus-circle"></i> Add New Product
+      </a>
+    </div>
+    <div class="card-body">
+      {% if products %}
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead class="table-light">
+              <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price (₹)</th>
+                <th>Image URL</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in products %}
+                <tr>
+                  <td>{{ p.name }}</td>
+                  <td><span class="badge bg-{{ 'success' if p.quantity > 50 else ('warning' if p.quantity > 0 else 'danger') }}">{{ p.quantity }}</span></td>
+                  <td>{{ "%.2f"|format(p.price) }}</td>
+                  <td><small class="text-muted text-truncate" style="max-width: 150px; display: block;">{{ p.image_url or 'N/A' }}</small></td>
+                  <td>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('edit_product', product_id=p.id) }}">Edit</a>
+                    <form method="post" action="{{ url_for('delete_product', product_id=p.id) }}" style="display:inline" onsubmit="return confirm('Are you sure you want to delete {{ p.name }}?')">
+                      <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="text-muted text-center py-3">No products yet. Add one!</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h5>Recent Orders</h5>
+    </div>
+    <div class="card-body">
+      {% if orders %}
+        <div class="table-responsive">
+          <table class="table table-hover table-sm">
+            <thead class="table-light">
+              <tr>
+                <th>Customer Name</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Total (₹)</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for o in orders %}
+                <tr class="{% if o.is_new %}table-info{% endif %}">
+                  <td><strong>{{ o.customer_name }}</strong></td>
+                  <td>{{ o.product_name }}</td>
+                  <td>{{ o.quantity }}</td>
+                  <td><span class="badge bg-primary">₹{{ "%.2f"|format(o.total_price) }}</span></td>
+                  <td>{{ o.order_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="text-muted text-center py-3">No orders have been placed yet.</p>
+      {% endif %}
+    </div>
+  </div>
+  
+  <script>
+    function checkForNewOrders() {
+      fetch('{{ url_for("new_orders_count") }}')
+        .then(response => response.json())
+        .then(data => {
+          if (data.new_orders_count > 0) {
+            const alert = document.getElementById('newOrderAlert');
+            document.getElementById('newOrderCount').textContent = data.new_orders_count;
+            alert.style.display = 'block';
+          } else {
+            document.getElementById('newOrderAlert').style.display = 'none';
+          }
+        })
+        .catch(error => console.error('Error fetching new order count:', error));
+    }
+
+    setInterval(checkForNewOrders, 10000); 
+    window.onload = checkForNewOrders;
+  </script>
+  
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+  <h3>{{ product.name }}</h3>
+  <p>{{ product.description or 'No description' }}</p>
+  <p><strong>Price:</strong> ₹{{ "%.2f"|format(product.price) }}</p>
+  <p><strong>Available:</strong> {{ product.quantity }}</p>
+  <a class="btn btn-primary" href="{{ url_for('order_product', product_id=product.id) }}">Order</a>
+{% endblock %}

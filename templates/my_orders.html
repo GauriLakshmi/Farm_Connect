@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}My Orders{% endblock %}
+{% block content %}
+  <h3 class="display-6 mb-4">My Purchase History</h3>
+  
+  <div class="card shadow">
+    <div class="card-header bg-info text-white">
+      Order Details
+    </div>
+    <div class="card-body p-0">
+      {% if orders %}
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Farmer</th>
+                <th>Quantity</th>
+                <th>Total Price (₹)</th>
+                <th>Order Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for o in orders %}
+                <tr>
+                  <td>
+                    <img 
+                      src="{{ o.product.image_url }}" 
+                      alt="{{ o.product.name }}" 
+                      class="img-thumbnail" 
+                      style="width: 75px; height: 75px; object-fit: cover;"
+                    >
+                  </td>
+                  <td><strong>{{ o.product.name }}</strong></td>
+                  <td>{{ o.product.farmer.name or o.product.farmer.username }}</td>
+                  <td><span class="badge bg-secondary">{{ o.quantity }}</span></td>
+                  <td><strong class="text-success">₹{{ "%.2f"|format(o.total_price) }}</strong></td>
+                  <td><small class="text-muted">{{ o.order_date.strftime('%Y-%m-%d %H:%M') }}</small></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="text-muted text-center py-4">You haven't placed any orders yet.</p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

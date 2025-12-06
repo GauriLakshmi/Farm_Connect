@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Welcome to FarmConnect{% endblock %}
+{% block content %}
+
+<style>
+    .hero-section {
+        background: 
+            url("{{ url_for('static', filename='images/happy_farmer_bg.jpg') }}") no-repeat center center;
+        background-size: cover;
+        min-height: 90vh; 
+        display: flex;
+        align-items: center; 
+        justify-content: flex-start; /* PUSH CONTENT TO THE LEFT */
+        padding: 0 5%; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    .content-card {
+        background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white box */
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+        max-width: 450px; 
+        text-align: left;
+    }
+    .content-card h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #28a745; 
+        margin-bottom: 15px;
+    }
+    .content-card p {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: #343a40;
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+    .btn-custom-green {
+        background-color: #28a745;
+        border-color: #218838;
+        color: white;
+        font-weight: bold;
+        padding: 12px 25px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        border-radius: 50px;
+    }
+    .btn-custom-green:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+    .btn-custom-outline {
+        border: 2px solid #ff8c00;
+        color: #ff8c00;
+        background-color: transparent;
+        font-weight: bold;
+        padding: 12px 25px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        border-radius: 50px;
+    }
+    .btn-custom-outline:hover {
+        background-color: #ff8c00;
+        color: white;
+        transform: translateY(-2px);
+    }
+    @media (max-width: 768px) {
+        .hero-section {
+            justify-content: center;
+            padding: 20px 0;
+            background-size: auto 100%;
+        }
+        .content-card {
+            max-width: 90%;
+            padding: 25px;
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="hero-section">
+    <div class="content-card animate__animated animate__fadeInLeft">
+        
+        <h1 class="animate__animated animate__flipInX">FarmConnect</h1>
+        
+        <p class="animate__animated animate__fadeInUp animate__delay-1s">
+            Your direct link to local farmers and fresh, quality produce. Join our growing community!
+        </p>
+
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-start">
+            <a 
+                href="{{ url_for('products') }}" 
+                class="btn btn-custom-green shadow"
+            >
+                <i class="fas fa-seedling me-2"></i> Explore Products
+            </a>
+            <a 
+                href="{{ url_for('register') }}" 
+                class="btn btn-custom-outline shadow"
+            >
+                <i class="fas fa-users me-2"></i> Join Our Community
+            </a>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{{ url_for('login') }}" class="text-muted small-text">Already a member? Log In here.</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
