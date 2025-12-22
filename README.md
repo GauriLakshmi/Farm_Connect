@@ -1,7 +1,7 @@
 Micro Project by :-
-  Gauri Lakshmi
-Irin Dominic
-Merin Mathew
+  Gauri Lakshmi,
+Irin Dominic,
+Merin Mathew,
 Roshny Johnson
 
 The wesite consists of :- 
