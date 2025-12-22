@@ -1,10 +1,8 @@
-Live Website :- https://farm-connect-g3pd.onrender.com/
-
-Micro Project by :-//
--Gauri Lakshmi//
--Irin Dominic//
--Merin Mathew//
--Roshny Johnson//
+Micro Project by :-
+  Gauri Lakshmi
+Irin Dominic
+Merin Mathew
+Roshny Johnson
 
 The wesite consists of :- 
 <img width="1920" height="1200" alt="Screenshot (155)" src="https://github.com/user-attachments/assets/e76b6213-aeb6-4810-a574-43f1a6397705" />
